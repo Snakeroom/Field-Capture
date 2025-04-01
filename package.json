@@ -1,0 +1,47 @@
+{
+	"name": "@snakeroom/field-screenshot",
+	"version": "1.0.0",
+	"private": true,
+	"description": "Captures images of r/Field.",
+	"main": "./src/index.js",
+	"type": "module",
+	"scripts": {
+		"dev": "node --watch .",
+		"lint": "eslint \"./**/*.js\" --ignore-path .gitignore",
+		"start": "node ."
+	},
+	"keywords": [
+		"field",
+		"reddit",
+		"image",
+		"canvas"
+	],
+	"author": "haykam821",
+	"license": "MIT",
+	"dependencies": {
+		"@devvit/protos": "^0.11.11",
+		"canvas": "^3.1.0",
+		"debug": "^4.4.0",
+		"supports-color": "^10.0.0"
+	},
+	"devDependencies": {
+		"@types/debug": "^4.1.12",
+		"@types/node": "^22.13.17",
+		"eslint": "^8.57.1",
+		"eslint-config-haykam": "^1.24.0"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/Snakeroom/Field-Capture.git"
+	},
+	"bugs": {
+		"url": "https://github.com/Snakeroom/Field-Capture/issues"
+	},
+	"homepage": "https://github.com/Snakeroom/Field-Capture#readme",
+	"eslintConfig": {
+		"extends": "eslint-config-haykam",
+		"parserOptions": {
+			"sourceType": "module"
+		}
+	}
+}
