@@ -5,6 +5,11 @@ import { decodePartition } from "./utils/decode.js";
 import { fetchPartition } from "./partition.js";
 import { getCellColor } from "./utils/color.js";
 
+function getPercent(count, total) {
+	const percent = count / Math.max(total, 1) * 100;
+	return `${percent.toFixed(2)}%`;
+}
+
 export async function renderPartition(totalSize, partitionSize, subreddit, challenge, sequence, name) {
 	log("capturing screenshot for %s", name);
 
@@ -16,6 +21,7 @@ export async function renderPartition(totalSize, partitionSize, subreddit, chall
 	const imageData = context.createImageData(partitionSize, partitionSize);
 
 	let total = 0;
+	let claimed = 0;
 	let bans = 0;
 
 	for (let partitionX = 0; partitionX < partitionCount; partitionX += 1) {
@@ -38,8 +44,12 @@ export async function renderPartition(totalSize, partitionSize, subreddit, chall
 					index += 1;
 					total += 1;
 
-					if (cell?.ban) {
-						bans += 1;
+					if (cell) {
+						claimed += 1;
+
+						if (cell.ban) {
+							bans += 1;
+						}
 					}
 				}
 
@@ -48,7 +58,8 @@ export async function renderPartition(totalSize, partitionSize, subreddit, chall
 		}
 	}
 
-	statsLog("%s% of claimed cells on %s are bans", (bans / Math.max(total, 1) * 100).toFixed(2), name);
+	statsLog("%s of all cells on %s are claimed", getPercent(claimed, total), name);
+	statsLog("%s of claimed cells on %s are bans", getPercent(bans, claimed), name);
 
 	return canvas;
 }
