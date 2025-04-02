@@ -9,17 +9,25 @@ const TEAM_COLORS = [
 
 const BAN_COLOR = 0x7DFF00;
 const UNCLAIMED_COLOR = 0x000000;
-
+const CLAIMED_SHADE = 0x202020;
 /**
  * Gets an RGB color representing a given cell.
  * @param {import("./decode").Cell | null} cell the cell to get the color for
  * @returns {number} the color
  */
-export function getCellColor(cell) {
+export function getCellColor(cell,banOnly,shade) {
 	if (cell?.ban) {
 		return BAN_COLOR;
 	} else if (cell?.team !== undefined) {
-		return TEAM_COLORS[cell.team];
+		if(banOnly) {
+			if(shade) {
+				return CLAIMED_SHADE;
+			}
+			else return UNCLAIMED_COLOR;
+		}
+		else {
+			return TEAM_COLORS[cell.team];
+		}
 	}
 
 	return UNCLAIMED_COLOR;

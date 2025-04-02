@@ -5,7 +5,7 @@ import { decodePartition } from "./utils/decode.js";
 import { fetchPartition } from "./partition.js";
 import { getCellColor } from "./utils/color.js";
 
-export async function renderPartition(totalSize, partitionSize, subreddit, challenge, sequence, name) {
+export async function renderPartition(totalSize, partitionSize, subreddit, challenge, sequence, name, banOnly, shade) {
 	log("capturing screenshot for %s", name);
 
 	const partitionCount = Math.floor(totalSize / partitionSize);
@@ -28,7 +28,7 @@ export async function renderPartition(totalSize, partitionSize, subreddit, chall
 				let index = 0;
 
 				for (const cell of cells) {
-					const color = getCellColor(cell);
+					const color = getCellColor(cell, banOnly, shade);
 
 					imageData.data[index * 4] = (color >> 16) & 0xFF;
 					imageData.data[index * 4 + 1] = (color >> 8) & 0xFF;
