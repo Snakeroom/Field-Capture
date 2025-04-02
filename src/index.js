@@ -23,10 +23,20 @@ for (const { cookie, id, installation, overrideConfig, post } of FIELDS) {
 		const totalSize = config.challengeConfig.size;
 		const partitionSize = config.challengeConfig.partitionSize;
 
-		const canvas = await renderPartition(totalSize, partitionSize, subreddit, challenge, sequence, name);
+		const canvas = await renderPartition(totalSize, partitionSize, subreddit, challenge, sequence, name,false,false);
 
 		const writeStream = createWriteStream(`${OUTPUT_DIR}/${id}.png`);
 		canvas.createPNGStream().pipe(writeStream);
+		
+		const bancanvas = await renderPartition(totalSize, partitionSize, subreddit, challenge, sequence, name,true,false);
+
+		const banWriteStream = createWriteStream(`${OUTPUT_DIR}/${id}_b.png`);
+		bancanvas.createPNGStream().pipe(banWriteStream);
+		
+		const shadecanvas = await renderPartition(totalSize, partitionSize, subreddit, challenge, sequence, name,true,true);
+
+		const shadeWriteStream = createWriteStream(`${OUTPUT_DIR}/${id}_s.png`);
+		shadecanvas.createPNGStream().pipe(shadeWriteStream);
 	} catch (error) {
 		log("failed to capture screenshot for %s", installation, error);
 	}
